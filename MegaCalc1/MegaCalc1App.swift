@@ -11,7 +11,9 @@ import SwiftUI
 struct MegaCalc1App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MegaCalcView()
+				  .preferredColorScheme(.light)
+				  .frame(width: 800.0, height: 400.0)
         }
     }
 }

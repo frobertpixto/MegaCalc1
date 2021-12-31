@@ -7,13 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3979430D277F8C460049AE4E /* BigIntegerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3979430B277F8C460049AE4E /* BigIntegerTests.swift */; };
+		3979430E277F8C460049AE4E /* IntegerListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3979430C277F8C460049AE4E /* IntegerListTests.swift */; };
+		39794310277FA5D50049AE4E /* MegaDecimalAlgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3979430F277FA5D50049AE4E /* MegaDecimalAlgo.swift */; };
+		398A715D277F72C300A14FF2 /* BorderedViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A715C277F72C300A14FF2 /* BorderedViewModifier.swift */; };
+		398A715E277F72C300A14FF2 /* BorderedViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A715C277F72C300A14FF2 /* BorderedViewModifier.swift */; };
+		398A715F277F72C300A14FF2 /* BorderedViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A715C277F72C300A14FF2 /* BorderedViewModifier.swift */; };
+		398A71A7277F80E100A14FF2 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A71A5277F80E100A14FF2 /* BigInteger.swift */; };
+		398A71A8277F80E100A14FF2 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A71A5277F80E100A14FF2 /* BigInteger.swift */; };
+		398A71A9277F80E100A14FF2 /* BigInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A71A5277F80E100A14FF2 /* BigInteger.swift */; };
+		398A71AA277F80E100A14FF2 /* IntegerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A71A6277F80E100A14FF2 /* IntegerList.swift */; };
+		398A71AB277F80E100A14FF2 /* IntegerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A71A6277F80E100A14FF2 /* IntegerList.swift */; };
+		398A71AC277F80E100A14FF2 /* IntegerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 398A71A6277F80E100A14FF2 /* IntegerList.swift */; };
 		39A76306277A9F320003BBEB /* MegaCalc1App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76305277A9F320003BBEB /* MegaCalc1App.swift */; };
-		39A76308277A9F320003BBEB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76307277A9F320003BBEB /* ContentView.swift */; };
+		39A76308277A9F320003BBEB /* MegaCalcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76307277A9F320003BBEB /* MegaCalcView.swift */; };
 		39A7630A277A9F350003BBEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39A76309277A9F350003BBEB /* Assets.xcassets */; };
 		39A7630D277A9F350003BBEB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39A7630C277A9F350003BBEB /* Preview Assets.xcassets */; };
 		39A76318277A9F360003BBEB /* MegaCalc1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76317277A9F360003BBEB /* MegaCalc1Tests.swift */; };
 		39A76322277A9F360003BBEB /* MegaCalc1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76321277A9F360003BBEB /* MegaCalc1UITests.swift */; };
 		39A76324277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76323277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift */; };
+		39F57294277FBCA1003143CE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 39F57293277FBCA1003143CE /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +47,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3979430B277F8C460049AE4E /* BigIntegerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigIntegerTests.swift; sourceTree = "<group>"; };
+		3979430C277F8C460049AE4E /* IntegerListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerListTests.swift; sourceTree = "<group>"; };
+		3979430F277FA5D50049AE4E /* MegaDecimalAlgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MegaDecimalAlgo.swift; sourceTree = "<group>"; };
+		398A715C277F72C300A14FF2 /* BorderedViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedViewModifier.swift; sourceTree = "<group>"; };
+		398A71A5277F80E100A14FF2 /* BigInteger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigInteger.swift; sourceTree = "<group>"; };
+		398A71A6277F80E100A14FF2 /* IntegerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerList.swift; sourceTree = "<group>"; };
 		39A76302277A9F320003BBEB /* MegaCalc1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MegaCalc1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39A76305277A9F320003BBEB /* MegaCalc1App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1App.swift; sourceTree = "<group>"; };
-		39A76307277A9F320003BBEB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		39A76307277A9F320003BBEB /* MegaCalcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalcView.swift; sourceTree = "<group>"; };
 		39A76309277A9F350003BBEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		39A7630C277A9F350003BBEB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		39A7630E277A9F350003BBEB /* MegaCalc1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MegaCalc1.entitlements; sourceTree = "<group>"; };
@@ -45,6 +64,7 @@
 		39A7631D277A9F360003BBEB /* MegaCalc1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MegaCalc1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39A76321277A9F360003BBEB /* MegaCalc1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1UITests.swift; sourceTree = "<group>"; };
 		39A76323277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		39F57293277FBCA1003143CE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,9 +92,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		398A715B277F728400A14FF2 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				398A715C277F72C300A14FF2 /* BorderedViewModifier.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		398A71A4277F80A300A14FF2 /* BigInteger */ = {
+			isa = PBXGroup;
+			children = (
+				398A71A5277F80E100A14FF2 /* BigInteger.swift */,
+				398A71A6277F80E100A14FF2 /* IntegerList.swift */,
+			);
+			path = BigInteger;
+			sourceTree = "<group>";
+		};
+		398A71AD277F80FF00A14FF2 /* Algo */ = {
+			isa = PBXGroup;
+			children = (
+				3979430F277FA5D50049AE4E /* MegaDecimalAlgo.swift */,
+			);
+			path = Algo;
+			sourceTree = "<group>";
+		};
 		39A762F9277A9F320003BBEB = {
 			isa = PBXGroup;
 			children = (
+				39F57293277FBCA1003143CE /* README.md */,
 				39A76304277A9F320003BBEB /* MegaCalc1 */,
 				39A76316277A9F360003BBEB /* MegaCalc1Tests */,
 				39A76320277A9F360003BBEB /* MegaCalc1UITests */,
@@ -95,8 +141,11 @@
 		39A76304277A9F320003BBEB /* MegaCalc1 */ = {
 			isa = PBXGroup;
 			children = (
+				398A715B277F728400A14FF2 /* Components */,
 				39A76305277A9F320003BBEB /* MegaCalc1App.swift */,
-				39A76307277A9F320003BBEB /* ContentView.swift */,
+				39A76307277A9F320003BBEB /* MegaCalcView.swift */,
+				398A71AD277F80FF00A14FF2 /* Algo */,
+				398A71A4277F80A300A14FF2 /* BigInteger */,
 				39A76309277A9F350003BBEB /* Assets.xcassets */,
 				39A7630E277A9F350003BBEB /* MegaCalc1.entitlements */,
 				39A7630B277A9F350003BBEB /* Preview Content */,
@@ -116,6 +165,8 @@
 			isa = PBXGroup;
 			children = (
 				39A76317277A9F360003BBEB /* MegaCalc1Tests.swift */,
+				3979430B277F8C460049AE4E /* BigIntegerTests.swift */,
+				3979430C277F8C460049AE4E /* IntegerListTests.swift */,
 			);
 			path = MegaCalc1Tests;
 			sourceTree = "<group>";
@@ -233,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39F57294277FBCA1003143CE /* README.md in Resources */,
 				39A7630D277A9F350003BBEB /* Preview Assets.xcassets in Resources */,
 				39A7630A277A9F350003BBEB /* Assets.xcassets in Resources */,
 			);
@@ -259,8 +311,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39A76308277A9F320003BBEB /* ContentView.swift in Sources */,
+				39794310277FA5D50049AE4E /* MegaDecimalAlgo.swift in Sources */,
+				39A76308277A9F320003BBEB /* MegaCalcView.swift in Sources */,
+				398A71AA277F80E100A14FF2 /* IntegerList.swift in Sources */,
 				39A76306277A9F320003BBEB /* MegaCalc1App.swift in Sources */,
+				398A715D277F72C300A14FF2 /* BorderedViewModifier.swift in Sources */,
+				398A71A7277F80E100A14FF2 /* BigInteger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +324,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				398A715E277F72C300A14FF2 /* BorderedViewModifier.swift in Sources */,
+				398A71A8277F80E100A14FF2 /* BigInteger.swift in Sources */,
+				3979430E277F8C460049AE4E /* IntegerListTests.swift in Sources */,
+				3979430D277F8C460049AE4E /* BigIntegerTests.swift in Sources */,
+				398A71AB277F80E100A14FF2 /* IntegerList.swift in Sources */,
 				39A76318277A9F360003BBEB /* MegaCalc1Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,7 +338,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				39A76322277A9F360003BBEB /* MegaCalc1UITests.swift in Sources */,
+				398A71AC277F80E100A14FF2 /* IntegerList.swift in Sources */,
 				39A76324277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift in Sources */,
+				398A715F277F72C300A14FF2 /* BorderedViewModifier.swift in Sources */,
+				398A71A9277F80E100A14FF2 /* BigInteger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
