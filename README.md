@@ -3,7 +3,7 @@
 ## Migration to SwiftUI
 This a migration from my MegaCalc repo (AppKit) to SwiftUI
 
-This is still a Work in Progress as I continue leaning SwiftUI
+This is still a Work in Progress as I continue to learn SwiftUI
 
 ### TODO
 - Add UI tests
@@ -21,7 +21,7 @@ This is still a Work in Progress as I continue leaning SwiftUI
 - No known issues...
 
 ### Notes
-- Async/Await is is not supported on MacOS < 12. SO not using it as I want to support Big Sur (11.6)
+- Async/Await is is not supported on MacOS < 12. So not using it as I want to support Big Sur (11.6)
 
 
 ## MegaCalc - Almost infinite Integer Calculator

@@ -15,34 +15,6 @@ struct OperationData
 	var textResponse : String? = nil
 }
 
-struct OperationButtonStyle: ButtonStyle {
-  func makeBody(configuration: Configuration) -> some View {
-	 configuration.label
-		.frame(width: 70, height: 40)
-		.opacity(configuration.isPressed ? 0.2 : 1)
-		.addButtonBorder(Color.gray)
-		.background(
-		  RadialGradient(
-			 gradient: Gradient(
-				colors: [Color.white, Color.gray]
-			 ),
-			 center: .center,
-			 startRadius: 0,
-			 endRadius: 90
-		  )
-		)
-  }
-}
-struct CalcButtonStyle: ButtonStyle {
-  func makeBody(configuration: Configuration) -> some View {
-	 configuration.label
-		.frame(width: 60, height: 30) //, alignment: .leading)
-//		.padding(EdgeInsets(top: 0, leading:2, bottom: 0, trailing: 2))
-		.opacity(configuration.isPressed ? 0.2 : 1)
-		.addButtonBorder(Color.blue)
-  }
-}
-
 struct MegaCalcView: View {
 	@State private var accumulator = 0.0
 	@State private var display = ""
@@ -72,105 +44,75 @@ struct MegaCalcView: View {
     var body: some View {
 		 Color(.white).overlay(
 		 LazyVStack {
-			 HStack {
-				 Text("A:")
-					 .frame(width: 60, height: operandHeight, alignment: .trailing)
-				 TextField("1111", text: $a)
-					 .bordered()
-				 Button(action: {
-					 self.resToA()
-				 }, label: {
-					Text("A <- Res")
-				 })
-					 .buttonStyle(CalcButtonStyle())
+			 Group {
+				 HStack {
+					 Text("A:")
+						 .frame(width: 60, height: operandHeight, alignment: .trailing)
+					 TextField("1111", text: $a)
+						 .bordered()
+					 Button(action: {
+						 self.resToA()
+					 }, label: { Text("A <- Res") })
+				 }
 				 
-			 }.padding(EdgeInsets(top: 0, leading:10, bottom: 0, trailing: 10))
-			 
-			 HStack {
-				 Text("B:")
-					 .frame(width: 60, height: operandHeight, alignment: .trailing)
-				 TextField("2222", text: $b)
-					 .bordered()
-				 Button(action: {
-					 self.resToB()
-				 }, label: {
-					Text("B <- Res")
-				 })
-					 .buttonStyle(CalcButtonStyle())
-			 }.padding(EdgeInsets(top: 0, leading:10, bottom: 0, trailing: 10))
-			 
-			 HStack {
-				 Text("Result:")
-					 .frame(width: 60, height: operandHeight, alignment: .trailing)
-				 TextField("00", text: $result)
-					 .bordered()
-				 Button(action: {
-					 self.cancelOperation()
-				 }, label: {
-					Text("Cancel")
-				 })
-					 .buttonStyle(CalcButtonStyle())
-					 .disabled(true)
-			 }.padding(EdgeInsets(top: 0, leading:10, bottom: 0, trailing: 10))
+				 HStack {
+					 Text("B:")
+						 .frame(width: 60, height: operandHeight, alignment: .trailing)
+					 TextField("2222", text: $b)
+						 .bordered()
+					 Button(action: {
+						 self.resToB()
+					 }, label: { Text("B <- Res") })
+				 }
+				 
+				 HStack {
+					 Text("Result:")
+						 .frame(width: 60, height: operandHeight, alignment: .trailing)
+					 TextField("00", text: $result)
+						 .bordered()
+					 Button(action: {
+						 self.cancelOperation()
+					 }, label: { Text("Cancel") })
+						 .disabled(true)
+				 }
+			 }
+			 .buttonStyle(CalcButtonStyle())
+			 .padding(EdgeInsets(top: 0, leading:10, bottom: 0, trailing: 10))
 
 			 Spacer()
 			 LazyVGrid(columns: calculatorColumns, spacing: 20) {
 				 Group {
 					Button(action: {
 						self.aPlusB()
-					}, label: {
-					  Text("A + B")
-					})
-					.buttonStyle(OperationButtonStyle())
+					}, label: { Text("A + B")	})
 
 					Button(action: {
 						self.aSubB()
-					}, label: {
-					  Text("A - B")
-					})
-					.buttonStyle(OperationButtonStyle())
+					}, label: { Text("A - B")	})
 
 					Button(action: {
 						self.aMultB()
-					}, label: {
-					  Text("A * B")
-					})
-					.buttonStyle(OperationButtonStyle())
+					}, label: { Text("A * B")	})
 
 					Button(action: {
 						self.aDivB()
-					}, label: {
-					  Text("A / B")
-					})
-					.buttonStyle(OperationButtonStyle())
+					}, label: { Text("A / B") })
 
 					Button(action: {
 						self.aModB()
-					}, label: {
-					  Text("A MOD B")
-					})
-					.buttonStyle(OperationButtonStyle())
+					}, label: { Text("A MOD B") })
 
 					Button(action: {
 						self.factorialA()
-					}, label: {
-					  Text("A!")
-					})
-					.buttonStyle(OperationButtonStyle())
+					}, label: { Text("A!") })
 
 					Button(action: {
 						self.isAPrime()
-					}, label: {
-					  Text("Prime(A)")
-					})
-					.buttonStyle(OperationButtonStyle())
+					}, label: { Text("Prime(A)") })
 
 					Button(action: {
 						self.findBiggestPrimeSmallerOrEqualToA()
-					}, label: {
-					  Text("Pr() <= A")
-					})
-					.buttonStyle(OperationButtonStyle())
+					}, label: { Text("Pr() <= A") })
 				 }
 				 .buttonStyle(OperationButtonStyle())
 			 }
