@@ -13,7 +13,6 @@ This is still a Work in Progress as I continue leaning SwiftUI
 - Implement Algo delegates to show progress, duration
 - Implement Cancel
 - Improve UI to something like Newmorphic
-- Allow Form Resize
 - Refactor code using CLean Architecture Structure
 
 ### Bugs

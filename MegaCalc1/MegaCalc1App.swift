@@ -13,7 +13,8 @@ struct MegaCalc1App: App {
         WindowGroup {
             MegaCalcView()
 				  .preferredColorScheme(.light)
-				  .frame(width: 800.0, height: 400.0)
+				  .frame(minWidth: 600, minHeight: 300.0)
+				  .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 }
