@@ -12,11 +12,12 @@ This is still a Work in Progress as I continue leaning SwiftUI
 - Show number of digits for A, B and Result
 - Implement Algo delegates to show progress, duration
 - Implement Cancel
-- Improve UI to something like Newmorphic
+- Improve UI to something like Neumorphic
 - Refactor code using CLean Architecture Structure
+- Implement Accessibility features with SwiftUI
 
 ### Bugs
-- Zero should not be considered Prime
+- No known issues...
 
 ### Notes
 - Async/Await is is not supported on MacOS < 12

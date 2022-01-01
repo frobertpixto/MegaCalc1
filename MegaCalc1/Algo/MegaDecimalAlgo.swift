@@ -10,6 +10,7 @@ import Foundation
 
 enum MegaDecimalAlgoError: Error {
 	case cancelled
+	case doesNotExists
 }
 
 protocol MegaDecimalAlgoDelegate
@@ -162,7 +163,7 @@ class MegaDecimalAlgo
 			delegate?.algoEnded()
 		}
 		
-		guard a.isPositive else {
+		guard a > BigInteger(1) else {
 			return false
 		}
 
@@ -230,6 +231,10 @@ class MegaDecimalAlgo
 		defer {
 			// Any Clean-up
 			delegate?.algoEnded()
+		}
+		
+		guard a > BigInteger(1) else {
+			throw MegaDecimalAlgoError.doesNotExists
 		}
 		
 		var currentValue = a

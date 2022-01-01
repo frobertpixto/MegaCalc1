@@ -68,8 +68,8 @@ struct MegaCalcView: View {
 	@State private var display = ""
 	private let operandHeight: CGFloat = 30
 	
-	@State var a: String = ""
-	@State var b: String = ""
+	@State var a: String = "1111"
+	@State var b: String = "22222222"
 	@State var result: String = ""
 	
 	let megaDecimalAlgo = MegaDecimalAlgo()
@@ -79,6 +79,7 @@ struct MegaCalcView: View {
 	let errorInvalidA			= "Invalid number A"	// TODO Localize
 	let errorInvalidB			= "Invalid number B"	// TODO Localize
 	let tooBigForOperation	= "Number too Big for operation"	// TODO Localize
+	let doesNotExists			= "Does Not exists"	// TODO Localize
 
 	let calculatorColumns = [
 	  GridItem(.fixed(90), spacing: 20),
@@ -412,6 +413,9 @@ extension MegaCalcView {
 					}
 					catch MegaDecimalAlgoError.cancelled {
 						operationData.textResponse = self.errorCancelled
+					}
+					catch MegaDecimalAlgoError.doesNotExists {
+						operationData.textResponse = self.doesNotExists
 					}
 					catch let error {
 						operationData.textResponse = "\(error.localizedDescription)"
