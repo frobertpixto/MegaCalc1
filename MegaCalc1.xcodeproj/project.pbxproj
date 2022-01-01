@@ -27,6 +27,7 @@
 		39A76322277A9F360003BBEB /* MegaCalc1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76321277A9F360003BBEB /* MegaCalc1UITests.swift */; };
 		39A76324277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76323277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift */; };
 		39F57294277FBCA1003143CE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 39F57293277FBCA1003143CE /* README.md */; };
+		39F57296277FDBA8003143CE /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F57295277FDBA8003143CE /* ViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		39A76321277A9F360003BBEB /* MegaCalc1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1UITests.swift; sourceTree = "<group>"; };
 		39A76323277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		39F57293277FBCA1003143CE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		39F57295277FDBA8003143CE /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				39A76307277A9F320003BBEB /* MegaCalcView.swift */,
 				398A71AD277F80FF00A14FF2 /* Algo */,
 				398A71A4277F80A300A14FF2 /* BigInteger */,
+				39F57295277FDBA8003143CE /* ViewExtension.swift */,
 				39A76309277A9F350003BBEB /* Assets.xcassets */,
 				39A7630E277A9F350003BBEB /* MegaCalc1.entitlements */,
 				39A7630B277A9F350003BBEB /* Preview Content */,
@@ -314,6 +317,7 @@
 				39794310277FA5D50049AE4E /* MegaDecimalAlgo.swift in Sources */,
 				39A76308277A9F320003BBEB /* MegaCalcView.swift in Sources */,
 				398A71AA277F80E100A14FF2 /* IntegerList.swift in Sources */,
+				39F57296277FDBA8003143CE /* ViewExtension.swift in Sources */,
 				39A76306277A9F320003BBEB /* MegaCalc1App.swift in Sources */,
 				398A715D277F72C300A14FF2 /* BorderedViewModifier.swift in Sources */,
 				398A71A7277F80E100A14FF2 /* BigInteger.swift in Sources */,

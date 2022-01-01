@@ -13,14 +13,15 @@ This is still a Work in Progress as I continue leaning SwiftUI
 - Implement Algo delegates to show progress, duration
 - Implement Cancel
 - Improve UI to something like Neumorphic
-- Refactor code using CLean Architecture Structure
+- Refactor code using Clean Architecture Structure
 - Implement Accessibility features with SwiftUI
+- Add Unit tests for Algos
 
 ### Bugs
 - No known issues...
 
 ### Notes
-- Async/Await is is not supported on MacOS < 12
+- Async/Await is is not supported on MacOS < 12. SO not using it as I want to support Big Sur (11.6)
 
 
 ## MegaCalc - Almost infinite Integer Calculator

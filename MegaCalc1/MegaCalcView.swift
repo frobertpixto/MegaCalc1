@@ -15,26 +15,6 @@ struct OperationData
 	var textResponse : String? = nil
 }
 
-extension View {
-  public func addButtonBorder<S>(
-	 _ content: S,
-	 width: CGFloat = 1,
-	 cornerRadius: CGFloat = 5
-  ) -> some View where S: ShapeStyle {
-	 return overlay(RoundedRectangle(cornerRadius: cornerRadius).strokeBorder(content, lineWidth: width))
-  }
-}
-
-extension View {
-  func bordered() -> some View {
-	 ModifiedContent(
-		content: self,
-		modifier: BorderedViewModifier()
-	 )
-  }
-}
-
-
 struct OperationButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
 	 configuration.label
@@ -105,6 +85,7 @@ struct MegaCalcView: View {
 					 .buttonStyle(CalcButtonStyle())
 				 
 			 }.padding(EdgeInsets(top: 0, leading:10, bottom: 0, trailing: 10))
+			 
 			 HStack {
 				 Text("B:")
 					 .frame(width: 60, height: operandHeight, alignment: .trailing)
@@ -117,6 +98,7 @@ struct MegaCalcView: View {
 				 })
 					 .buttonStyle(CalcButtonStyle())
 			 }.padding(EdgeInsets(top: 0, leading:10, bottom: 0, trailing: 10))
+			 
 			 HStack {
 				 Text("Result:")
 					 .frame(width: 60, height: operandHeight, alignment: .trailing)
@@ -130,7 +112,7 @@ struct MegaCalcView: View {
 					 .buttonStyle(CalcButtonStyle())
 					 .disabled(true)
 			 }.padding(EdgeInsets(top: 0, leading:10, bottom: 0, trailing: 10))
-			 
+
 			 Spacer()
 			 LazyVGrid(columns: calculatorColumns, spacing: 20) {
 				 Group {
