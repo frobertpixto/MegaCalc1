@@ -8,7 +8,6 @@ This is still a Work in Progress as I continue to learn SwiftUI
 ### TODO
 - Add UI tests
 - Support Light and Dark Themes
-- Make result TextField Readonly
 - Show number of digits for A, B and Result
 - Implement Algo delegates to show progress, duration
 - Implement Cancel

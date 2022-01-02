@@ -70,10 +70,10 @@ struct MegaCalcView: View {
 						 .frame(width: 60, height: operandHeight, alignment: .trailing)
 					 TextField("00", text: $result)
 						 .bordered()
+//						 .disabled(true)
 					 Button(action: {
 						 self.cancelOperation()
 					 }, label: { Text("Cancel") })
-						 .disabled(true)
 				 }
 			 }
 			 .buttonStyle(CalcButtonStyle())
