@@ -20,8 +20,8 @@ struct MegaCalcView: View {
 	@State private var display = ""
 	private let operandHeight: CGFloat = 30
 	
-	@State var a: String = "1111"
-	@State var b: String = "22222222"
+	@State var a: String = "111111"
+	@State var b: String = "2222"
 	@State var result: String = ""
 	
 	let megaDecimalAlgo = MegaDecimalAlgo()
@@ -48,7 +48,7 @@ struct MegaCalcView: View {
 				 HStack {
 					 Text("A:")
 						 .frame(width: 60, height: operandHeight, alignment: .trailing)
-					 TextField("1111", text: $a)
+					 TextField("", text: $a)
 						 .bordered()
 					 Button(action: {
 						 self.resToA()
@@ -58,7 +58,7 @@ struct MegaCalcView: View {
 				 HStack {
 					 Text("B:")
 						 .frame(width: 60, height: operandHeight, alignment: .trailing)
-					 TextField("2222", text: $b)
+					 TextField("", text: $b)
 						 .bordered()
 					 Button(action: {
 						 self.resToB()
@@ -70,7 +70,6 @@ struct MegaCalcView: View {
 						 .frame(width: 60, height: operandHeight, alignment: .trailing)
 					 TextField("00", text: $result)
 						 .bordered()
-//						 .disabled(true)
 					 Button(action: {
 						 self.cancelOperation()
 					 }, label: { Text("Cancel") })
@@ -171,6 +170,7 @@ extension MegaCalcView {
 		b = result
 	}
 	func cancelOperation() {
+		megaDecimalAlgo.cancel()
 	}
 	
 	func aPlusB() {

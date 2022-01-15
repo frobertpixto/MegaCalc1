@@ -10,7 +10,6 @@ This is still a Work in Progress as I continue to learn SwiftUI
 - Support Light and Dark Themes
 - Show number of digits for A, B and Result
 - Implement Algo delegates to show progress, duration
-- Implement Cancel
 - Improve UI to something like Neumorphic
 - Refactor code using Clean Architecture Structure
 - Implement Accessibility features with SwiftUI
