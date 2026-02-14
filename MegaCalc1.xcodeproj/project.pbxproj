@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3910B9922F40FE4E0071C01E /* MegaCalcViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3910B9912F40FE4E0071C01E /* MegaCalcViewModel.swift */; };
 		394AA43D2780C58D001E8258 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394AA43C2780C58D001E8258 /* ButtonStyles.swift */; };
 		3979430D277F8C460049AE4E /* BigIntegerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3979430B277F8C460049AE4E /* BigIntegerTests.swift */; };
 		3979430E277F8C460049AE4E /* IntegerListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3979430C277F8C460049AE4E /* IntegerListTests.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3910B9912F40FE4E0071C01E /* MegaCalcViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalcViewModel.swift; sourceTree = "<group>"; };
 		394AA43C2780C58D001E8258 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		3979430B277F8C460049AE4E /* BigIntegerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigIntegerTests.swift; sourceTree = "<group>"; };
 		3979430C277F8C460049AE4E /* IntegerListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerListTests.swift; sourceTree = "<group>"; };
@@ -149,9 +151,10 @@
 				398A715B277F728400A14FF2 /* Components */,
 				39A76305277A9F320003BBEB /* MegaCalc1App.swift */,
 				39A76307277A9F320003BBEB /* MegaCalcView.swift */,
+				3910B9912F40FE4E0071C01E /* MegaCalcViewModel.swift */,
+				39F57295277FDBA8003143CE /* ViewExtension.swift */,
 				398A71AD277F80FF00A14FF2 /* Algo */,
 				398A71A4277F80A300A14FF2 /* BigInteger */,
-				39F57295277FDBA8003143CE /* ViewExtension.swift */,
 				39A76309277A9F350003BBEB /* Assets.xcassets */,
 				39A7630E277A9F350003BBEB /* MegaCalc1.entitlements */,
 				39A7630B277A9F350003BBEB /* Preview Content */,
@@ -324,6 +327,7 @@
 				39A76306277A9F320003BBEB /* MegaCalc1App.swift in Sources */,
 				394AA43D2780C58D001E8258 /* ButtonStyles.swift in Sources */,
 				398A715D277F72C300A14FF2 /* BorderedViewModifier.swift in Sources */,
+				3910B9922F40FE4E0071C01E /* MegaCalcViewModel.swift in Sources */,
 				398A71A7277F80E100A14FF2 /* BigInteger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
