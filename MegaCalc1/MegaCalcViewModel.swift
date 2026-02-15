@@ -193,16 +193,16 @@ final class MegaCalcViewModel: ObservableObject {
 
     // Runs blocking work off the main actor, with cancellation propagating to the algorithm
     private func runBlockingWithCancellation(_ work: @escaping () -> Result<String, CalcError>) async -> Result<String, CalcError> {
-        return await Task.withCancellationHandler(handler: {
-            // Hop back to the main actor to access main-actor isolated state safely
-            Task { @MainActor [algo] in
-                algo.cancel()
-            }
-        }, operation: {
+        return await withTaskCancellationHandler(operation: {
             // Run the blocking work off the main actor
             await Task.detached(priority: .userInitiated) { () -> Result<String, CalcError> in
                 return work()
             }.value
+        }, onCancel: {
+            // Hop back to the main actor to access main-actor isolated state safely
+            Task { @MainActor [algo] in
+                algo.cancel()
+            }
         })
     }
 
