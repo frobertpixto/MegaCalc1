@@ -303,10 +303,10 @@ class MegaDecimalAlgo
 		
 		// Find a Exp10 value that is fast.
 		// Use the following approximation. Fast to compute and smaller than a division by 2.
-		// 0..10						: 10
-		// 11..100					: 10
-		// 101..1_000				: 100
-		// 1_001..10_000			: 100
+		// 0..10				: 10
+		// 11..100				: 10
+		// 101..1_000			: 100
+		// 1_001..10_000		: 100
 		// 10_001..100_000		: 1000
 		// 100_001..1_000_000	: 1000
 		// and so on...
