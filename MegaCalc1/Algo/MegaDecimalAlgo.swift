@@ -323,7 +323,9 @@ class MegaDecimalAlgo
 		// 10_001..1_000_000	   : 100*sqrt100     Ex: 551234 -> 800 > Actual Max: 742
 		// and so on...
 
-		
+		// Maybe we could do something even better by extracting the first 18 digits DDD (well find the biggest integer size for which we can evaluate the square root using a standard method),
+        // Then we compute SSS = int(sqrt(DDD)+1) and we approximate the upper square root of BigInteger `a` as `a` where DDD is replaced by AAA.
+        // TODO: verify the impact of a even number of digit vs odd number for `a`
 	}
 	
 	private func prepare()

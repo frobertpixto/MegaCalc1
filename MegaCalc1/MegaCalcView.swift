@@ -21,7 +21,7 @@ struct MegaCalcView: View {
 
     var body: some View {
         Color(.white).overlay(
-            LazyVStack {
+            VStack {
                 Group {
                     OperandRow(title: "A:", text: $vm.aText, buttonTitle: "A <- Res", action: vm.setResultToA)
                     OperandRow(title: "B:", text: $vm.bText, buttonTitle: "B <- Res", action: vm.setResultToB)
@@ -34,7 +34,6 @@ struct MegaCalcView: View {
                     ProgressView().padding(.vertical, 8)
                 }
 
-                Spacer()
                 LazyVGrid(columns: calculatorColumns, spacing: 20) {
                     Group {
                         Button("A + B", action: vm.add)
@@ -49,6 +48,7 @@ struct MegaCalcView: View {
                     .disabled(vm.isBusy)
                     .buttonStyle(OperationButtonStyle())
                 }
+                .padding(EdgeInsets(top: 20, leading: 10, bottom: 0, trailing: 10))
             }
         )
     }
