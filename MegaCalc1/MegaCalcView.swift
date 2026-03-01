@@ -61,12 +61,27 @@ private struct OperandRow: View {
     let action: () -> Void
     private let operandHeight: CGFloat = 30
 
+    private var digitCountLabel: String {
+        var digits = text
+        if let first = digits.first, first == "+" || first == "-" {
+            digits.removeFirst()
+        }
+        digits = String(digits.drop(while: { $0 == "0" }))
+        if digits.isEmpty { return "" }
+        let count = digits.count
+        return count == 1 ? "1 digit" : "\(count) digits"
+    }
+
     var body: some View {
         HStack {
             Text(title)
                 .frame(width: 60, height: operandHeight, alignment: .trailing)
             TextField("", text: $text)
                 .bordered()
+            Text(digitCountLabel)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(width: 80, alignment: .trailing)
             Button(buttonTitle, action: action)
         }
     }

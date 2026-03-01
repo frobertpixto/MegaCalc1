@@ -6,7 +6,6 @@ This a migration from my MegaCalc repo (AppKit) to SwiftUI
 This is still a Work in Progress as I continue to learn SwiftUI
 
 ### TODO
-- Show number of digits for A, B and Result
 - Implement Algo delegates to show progress, duration at the bottom.
 - Improve MegaDecimalAlgo.getUpperSquareRootApproximation() to lower the number of calculations when searching for prime numbers.
 - Support Light and Dark Themes
