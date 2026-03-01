@@ -6,9 +6,14 @@ This a migration from my MegaCalc repo (AppKit) to SwiftUI
 This is still a Work in Progress as I continue to learn SwiftUI
 
 ### TODO
-- Implement Algo delegates to show progress, duration at the bottom.
+- Show duration for all operation at the bottom, For Factorial, show a progress bar at the bottom
 - Improve MegaDecimalAlgo.getUpperSquareRootApproximation() to lower the number of calculations when searching for prime numbers.
 - Support Light and Dark Themes
+- Add Buttons that generates big numbers
+  - All 111...111 of selected length. Example: for selected length 9: 111111111
+  - All 999...999 of selected length
+  - All Random of selected length
+- Use struct instead of classes?  
 - Implement Accessibility features with SwiftUI?
 - Add Unit tests for Algos
 - Add UI tests
