@@ -61,6 +61,53 @@ MegaCalc1/
 
 **Modernization needed:** The codebase needs to catch up with AGENTS.md requirements (macOS 26, `@Observable`, modern SwiftUI APIs). That's the next chapter.
 
+### Entry: Session 1 — Modernization (2026-03-01)
+
+**Goal:** Bring the entire codebase up to AGENTS.md standards — macOS 26+, Swift 6.2 strict concurrency, `@Observable`, modern SwiftUI APIs, and Swift Testing framework.
+
+**Phase 1: Sendable conformance**
+
+The first challenge was making the model layer safe under strict concurrency:
+
+- `IntegerList` and `BigInteger` — marked `@unchecked Sendable`. These are reference types, but in practice they behave like values: operator overloads always return new instances, and no code mutates a shared instance from multiple threads. The `@unchecked` is honest — we've audited it, not just slapped it on.
+- `MegaDecimalAlgo` — this was the interesting one. Its `isCancelled` flag is genuinely accessed from multiple threads (main thread sets it, background thread reads it). Replaced the bare `Bool` with `Mutex<Bool>` from the `Synchronization` framework. The class becomes `final class MegaDecimalAlgo: Sendable` — fully verified by the compiler.
+- Removed the `MegaDecimalAlgoDelegate` protocol and all `delegate?.algo*()` calls — the delegate was never assigned or implemented. Dead code removed.
+
+**Phase 2: ViewModel migration**
+
+- `ObservableObject` → `@Observable`, all `@Published` wrappers removed.
+- The tricky part: `startTask`'s `operation` closure must NOT be `@Sendable` — it needs to inherit `@MainActor` isolation so it can call `self.apply()`. The `work` closure passed to `runBlockingWithCancellation` IS `@Sendable` since it runs on a detached task.
+- For `factorial()`, `isPrime()`, and `primeSmallerOrEqual()`: captured `algo` as a local `let` before entering `@Sendable` closures to avoid accessing `@MainActor`-isolated `self.algo` from a non-isolated context.
+- Simplified the `onCancel` handler — `localAlgo.cancel()` can be called directly since `Mutex` makes it thread-safe, no `MainActor` hop needed.
+
+**Phase 3: SwiftUI modernization**
+
+- `@StateObject` → `@State` (matches `@Observable`)
+- `Color(.white)` → `Color.white` (no UIKit colors)
+- `PreviewProvider` → `#Preview` macro
+- `.foregroundColor()` → `.foregroundStyle()`
+- `RadialGradient(gradient: Gradient(colors:...))` → `RadialGradient(colors:...)`
+- `ModifiedContent(content: self, modifier:)` → `.modifier()`
+- Removed zero-padding that did nothing
+
+**Phase 4: Swift Testing migration**
+
+- `import XCTest` → `import Testing` in both test files
+- `class ... : XCTestCase` → `@Suite struct ...`
+- `XCTAssertEqual`/`XCTAssertTrue` → `#expect(a == b)`/`#expect(...)`
+- `do/catch` error assertions → `#expect(throws: BigIntegerError.divideByZero) { ... }`
+- Added `Equatable` conformance to `BigIntegerError` (required by `#expect(throws:)`)
+- Removed empty `setUp()`/`tearDown()` methods
+- Deleted empty `MegaCalc1Tests.swift` boilerplate
+- Updated test target deployment target from macOS 11.6 → 26.0
+
+**Result:** All 39 unit tests pass (9 IntegerList + 30 BigInteger). Build clean with zero warnings.
+
+**Lessons learned:**
+- The `@Sendable` vs non-`@Sendable` closure distinction in the ViewModel is subtle but critical. Marking `startTask`'s parameter as `@Sendable` strips the `@MainActor` context, making it impossible to call actor-isolated methods. The fix is to let `Task {}` inherit the enclosing actor context naturally.
+- `Mutex<Bool>` from `Synchronization` is the right tool for a simple thread-safe flag. It's lighter than actors and makes the entire class provably `Sendable`.
+- Swift Testing's `#expect(throws:)` requires `Equatable` on the error type — easy to miss.
+
 ## Engineer's Wisdom
 
 ### Patterns Worth Noting
@@ -77,4 +124,4 @@ MegaCalc1/
 
 - `BigInteger` as a `class` (reference type) is a historical choice. A `struct` with copy-on-write semantics might be more Swifty, but the operator overloads already create new instances, so mutation isn't a practical concern today.
 - The `String` extension with integer subscripting is convenient but fragile. Modern Swift's `String` APIs or a dedicated digit-extraction method might be cleaner.
-- `MegaDecimalAlgo` being a class with mutable `isCancelled` state means it's not `Sendable`. Under strict concurrency, this will need attention — possibly by making cancellation flow entirely through Swift's `Task.isCancelled` instead of a custom flag.
+- ~~`MegaDecimalAlgo` being a class with mutable `isCancelled` state means it's not `Sendable`.~~ **Resolved:** Now uses `Mutex<Bool>` from `Synchronization` and is fully `Sendable`. The custom `isCancelled` flag was kept rather than switching to `Task.isCancelled` because the algorithm methods are synchronous and called from `Task.detached` — the `Mutex` approach integrates cleanly with `withTaskCancellationHandler`.

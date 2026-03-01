@@ -42,10 +42,7 @@ extension View {
 	}
 
 	func bordered() -> some View {
-	  ModifiedContent(
-		 content: self,
-		 modifier: BorderedViewModifier()
-	  )
+	  modifier(BorderedViewModifier())
 	}
 	
   /// Simulate shining a light on the northwest edge of a view.

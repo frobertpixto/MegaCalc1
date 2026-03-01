@@ -9,7 +9,7 @@
 
 import Foundation
 
-public class IntegerList
+public class IntegerList: @unchecked Sendable
 {
 	fileprivate var mIntList = [Int]()
 	

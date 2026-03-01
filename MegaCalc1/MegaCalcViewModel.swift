@@ -1,12 +1,13 @@
 import SwiftUI
 
 @MainActor
-final class MegaCalcViewModel: ObservableObject {
+@Observable
+final class MegaCalcViewModel {
     // UI-facing state
-    @Published var aText: String = "111111"
-    @Published var bText: String = "2222"
-    @Published var resultText: String = ""
-    @Published var isBusy: Bool = false
+    var aText: String = "111111"
+    var bText: String = "2222"
+    var resultText: String = ""
+    var isBusy: Bool = false
 
     // Dependencies
     private let algo = MegaDecimalAlgo()
@@ -75,10 +76,11 @@ final class MegaCalcViewModel: ObservableObject {
         case .failure(let error):
             resultText = error.localizedDescription
         case .success(let a):
+            let algo = self.algo
             startTask {
-                let outcome: Result<String, CalcError> = await self.runBlockingWithCancellation {
+                let outcome: Result<String, CalcError> = await self.runBlockingWithCancellation { [algo] in
                     do {
-                        let r = try self.algo.factorial(a.toInt())
+                        let r = try algo.factorial(a.toInt())
                         return .success(r.toString())
                     }
                     catch MegaDecimalAlgoError.cancelled { return .failure(.cancelled) }
@@ -95,10 +97,11 @@ final class MegaCalcViewModel: ObservableObject {
         case .failure(let error):
             resultText = error.localizedDescription
         case .success(let a):
+            let algo = self.algo
             startTask {
-                let outcome: Result<String, CalcError> = await self.runBlockingWithCancellation {
+                let outcome: Result<String, CalcError> = await self.runBlockingWithCancellation { [algo] in
                     do {
-                        let text = try self.algo.isPrime(a) ? "Yes" : "No"
+                        let text = try algo.isPrime(a) ? "Yes" : "No"
                         return .success(text)
                     }
                     catch MegaDecimalAlgoError.cancelled { return .failure(.cancelled) }
@@ -114,10 +117,11 @@ final class MegaCalcViewModel: ObservableObject {
         case .failure(let error):
             resultText = error.localizedDescription
         case .success(let a):
+            let algo = self.algo
             startTask {
-                let outcome: Result<String, CalcError> = await self.runBlockingWithCancellation {
+                let outcome: Result<String, CalcError> = await self.runBlockingWithCancellation { [algo] in
                     do {
-                        let r = try self.algo.smallerOrEqualPrime(a)
+                        let r = try algo.smallerOrEqualPrime(a)
                         return .success(r.toString())
                     }
                     catch MegaDecimalAlgoError.cancelled { return .failure(.cancelled) }
@@ -150,7 +154,7 @@ final class MegaCalcViewModel: ObservableObject {
 
     // MARK: - Operation helpers
 
-    private func performBinary(_ op: @escaping (BigInteger, BigInteger) -> BigInteger) {
+    private func performBinary(_ op: (BigInteger, BigInteger) -> BigInteger) {
         // Cancel any long-running task if a quick binary op is requested
         currentTask?.cancel()
         switch parseAB() {
@@ -162,7 +166,7 @@ final class MegaCalcViewModel: ObservableObject {
         }
     }
 
-    private func performBinaryThrowing(_ op: @escaping (BigInteger, BigInteger) throws -> BigInteger) {
+    private func performBinaryThrowing(_ op: (BigInteger, BigInteger) throws -> BigInteger) {
         // Cancel any long-running task if a quick binary op is requested
         currentTask?.cancel()
         switch parseAB() {
@@ -184,26 +188,22 @@ final class MegaCalcViewModel: ObservableObject {
     private func startTask(_ operation: @escaping () async -> Void) {
         currentTask?.cancel()
         isBusy = true
-        currentTask = Task { [weak self] in
-            guard let self = self else { return }
-            defer { self.isBusy = false }
+        currentTask = Task {
+            defer { isBusy = false }
             await operation()
         }
     }
 
     // Runs blocking work off the main actor, with cancellation propagating to the algorithm
-    private func runBlockingWithCancellation(_ work: @escaping () -> Result<String, CalcError>) async -> Result<String, CalcError> {
+    private func runBlockingWithCancellation(_ work: @escaping @Sendable () -> Result<String, CalcError>) async -> Result<String, CalcError> {
         let localAlgo = self.algo
         return await withTaskCancellationHandler(operation: {
             // Run the blocking work off the main actor
             await Task.detached(priority: .userInitiated) { () -> Result<String, CalcError> in
                 return work()
             }.value
-        }, onCancel: {
-            // Hop back to the main actor to access main-actor isolated state safely
-            Task { @MainActor in
-                localAlgo.cancel()
-            }
+        }, onCancel: { [localAlgo] in
+            localAlgo.cancel()
         })
     }
 
@@ -216,4 +216,3 @@ final class MegaCalcViewModel: ObservableObject {
         }
     }
 }
-

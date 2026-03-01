@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MegaCalcView: View {
-    @StateObject private var vm = MegaCalcViewModel()
+    @State private var vm = MegaCalcViewModel()
     private let operandHeight: CGFloat = 30
 
     private let calculatorColumns = [
@@ -20,7 +20,7 @@ struct MegaCalcView: View {
     ]
 
     var body: some View {
-        Color(.white).overlay(
+        Color.white.overlay(
             VStack {
                 Group {
                     OperandRow(title: "A:", text: $vm.aText, buttonTitle: "A <- Res", action: vm.setResultToA)
@@ -72,12 +72,8 @@ private struct OperandRow: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            MegaCalcView()
-                .preferredColorScheme(.light)
-                .frame(width: 800.0, height: 400.0)
-        }
-    }
+#Preview {
+    MegaCalcView()
+        .preferredColorScheme(.light)
+        .frame(width: 800.0, height: 400.0)
 }

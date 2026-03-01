@@ -25,7 +25,6 @@
 		39A76308277A9F320003BBEB /* MegaCalcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76307277A9F320003BBEB /* MegaCalcView.swift */; };
 		39A7630A277A9F350003BBEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39A76309277A9F350003BBEB /* Assets.xcassets */; };
 		39A7630D277A9F350003BBEB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39A7630C277A9F350003BBEB /* Preview Assets.xcassets */; };
-		39A76318277A9F360003BBEB /* MegaCalc1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76317277A9F360003BBEB /* MegaCalc1Tests.swift */; };
 		39A76322277A9F360003BBEB /* MegaCalc1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76321277A9F360003BBEB /* MegaCalc1UITests.swift */; };
 		39A76324277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A76323277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift */; };
 		39F57294277FBCA1003143CE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 39F57293277FBCA1003143CE /* README.md */; };
@@ -65,7 +64,6 @@
 		39A7630C277A9F350003BBEB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		39A7630E277A9F350003BBEB /* MegaCalc1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MegaCalc1.entitlements; sourceTree = "<group>"; };
 		39A76313277A9F360003BBEB /* MegaCalc1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MegaCalc1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		39A76317277A9F360003BBEB /* MegaCalc1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1Tests.swift; sourceTree = "<group>"; };
 		39A7631D277A9F360003BBEB /* MegaCalc1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MegaCalc1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39A76321277A9F360003BBEB /* MegaCalc1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1UITests.swift; sourceTree = "<group>"; };
 		39A76323277A9F360003BBEB /* MegaCalc1UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1UITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -173,7 +171,6 @@
 		39A76316277A9F360003BBEB /* MegaCalc1Tests */ = {
 			isa = PBXGroup;
 			children = (
-				39A76317277A9F360003BBEB /* MegaCalc1Tests.swift */,
 				3979430B277F8C460049AE4E /* BigIntegerTests.swift */,
 				3979430C277F8C460049AE4E /* IntegerListTests.swift */,
 			);
@@ -341,7 +338,6 @@
 				3979430E277F8C460049AE4E /* IntegerListTests.swift in Sources */,
 				3979430D277F8C460049AE4E /* BigIntegerTests.swift in Sources */,
 				398A71AB277F80E100A14FF2 /* IntegerList.swift in Sources */,
-				39A76318277A9F360003BBEB /* MegaCalc1Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +420,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -479,7 +475,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -554,12 +550,12 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixtolab.MegaCalc1Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MegaCalc1.app/Contents/MacOS/MegaCalc1";
 			};
 			name = Debug;
@@ -578,12 +574,12 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixtolab.MegaCalc1Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MegaCalc1.app/Contents/MacOS/MegaCalc1";
 			};
 			name = Release;
@@ -605,7 +601,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixtolab.MegaCalc1UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_TARGET_NAME = MegaCalc1;
 			};
 			name = Debug;
@@ -627,7 +623,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pixtolab.MegaCalc1UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_TARGET_NAME = MegaCalc1;
 			};
 			name = Release;

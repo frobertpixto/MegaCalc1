@@ -15,9 +15,7 @@ struct OperationButtonStyle: ButtonStyle {
 		.addButtonBorder(Color.gray)
 		.background(
 		  RadialGradient(
-			 gradient: Gradient(
-				colors: [Color.white, Color.gray]
-			 ),
+			 colors: [Color.white, Color.gray],
 			 center: .center,
 			 startRadius: 0,
 			 endRadius: 90

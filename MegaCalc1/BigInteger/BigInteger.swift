@@ -37,13 +37,13 @@ extension String {
 	 }
 }
 
-enum BigIntegerError: Error {
+enum BigIntegerError: Error, Equatable {
 	case invalidNumber(description: String)
 	case divideByZero
 	case tooBigForInt64
 }
 
-public class BigInteger : CustomStringConvertible, Comparable, Equatable, Hashable //, Integer//, SignedNumber
+public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparable, Equatable, Hashable
 {
 	private var mPositiveSign	= true
 	private let mOctobleList	= IntegerList() // The full number is represented as a list of 8 digits integers. We call a 8 digits integer value an Octoble
