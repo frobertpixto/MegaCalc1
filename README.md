@@ -6,20 +6,18 @@ This a migration from my MegaCalc repo (AppKit) to SwiftUI
 This is still a Work in Progress as I continue to learn SwiftUI
 
 ### TODO
-- Add UI tests
-- Support Light and Dark Themes
 - Show number of digits for A, B and Result
-- Implement Algo delegates to show progress, duration
-- Improve UI to something like Neumorphic
-- Refactor code using Clean Architecture Structure
-- Implement Accessibility features with SwiftUI
+- Implement Algo delegates to show progress, duration at the bottom.
+- Improve MegaDecimalAlgo.getUpperSquareRootApproximation() to lower the number of calculations when searching for prime numbers.
+- Support Light and Dark Themes
+- Implement Accessibility features with SwiftUI?
 - Add Unit tests for Algos
+- Add UI tests
+- Add support for interrupting/continuing a calculation using the file system to store progression state?
+- Support decimal point with BigDecimal?
 
 ### Bugs
 - No known issues...
-
-### Notes
-- Async/Await is is not supported on MacOS < 12. So not using it as I want to support Big Sur (11.6)
 
 
 ## MegaCalc - Almost infinite Integer Calculator
