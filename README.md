@@ -6,7 +6,6 @@ This a migration from my MegaCalc repo (AppKit) to SwiftUI
 This is still a Work in Progress as I continue to learn SwiftUI
 
 ### TODO
-- Show duration for all operation at the bottom, For Factorial, show a progress bar at the bottom
 - Improve MegaDecimalAlgo.getUpperSquareRootApproximation() to lower the number of calculations when searching for prime numbers.
 - Support Light and Dark Themes
 - Add Buttons that generates big numbers

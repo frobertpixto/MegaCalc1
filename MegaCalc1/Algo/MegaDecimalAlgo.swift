@@ -16,9 +16,16 @@ enum MegaDecimalAlgoError: Error {
 
 final class MegaDecimalAlgo: Sendable {
 	private let _isCancelled = Mutex(false)
+	/// Progress of the current factorial operation, 0.0 to 1.0
+	private let _progress = Mutex(0.0)
 
 	var isCancelled: Bool {
 		_isCancelled.withLock { $0 }
+	}
+
+	/// Current factorial progress (0.0 … 1.0). Thread-safe.
+	var progress: Double {
+		_progress.withLock { $0 }
 	}
 
 	func cancel() {
@@ -34,14 +41,22 @@ final class MegaDecimalAlgo: Sendable {
 		}
 
 		if a < 3 {
+			_progress.withLock { $0 = 1.0 }
 			return BigInteger(a)
 		}
 
 		var fact = BigInteger(2)
+		let total = Double(a - 2) // number of iterations (3...a)
 
 		// Iterate
 		for number in 3...a {
 			fact *= BigInteger(number)
+
+			// Update progress periodically (every 100 iterations to reduce lock contention)
+			if number % 100 == 0 || number == a {
+				let current = Double(number - 2)
+				_progress.withLock { $0 = current / total }
+			}
 
 			if isCancelled {
 				throw MegaDecimalAlgoError.cancelled
@@ -228,5 +243,6 @@ final class MegaDecimalAlgo: Sendable {
 
 	private func prepare() {
 		_isCancelled.withLock { $0 = false }
+		_progress.withLock { $0 = 0.0 }
 	}
 }

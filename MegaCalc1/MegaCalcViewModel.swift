@@ -9,11 +9,20 @@ final class MegaCalcViewModel {
     var resultText: String = ""
     var isBusy: Bool = false
 
+    /// Formatted duration of the last completed operation
+    var durationText: String = ""
+    /// Factorial progress (0.0 … 1.0), only meaningful while a factorial is running
+    var factorialProgress: Double = 0.0
+    /// Whether a factorial operation is currently running (drives progress bar visibility)
+    var isFactorialRunning: Bool = false
+
     // Dependencies
     private let algo = MegaDecimalAlgo()
 
     // Track the currently running task to support cancellation
     private var currentTask: Task<Void, Never>? = nil
+    // Timer task that polls algo.progress for factorial operations
+    private var progressPollTask: Task<Void, Never>? = nil
 
     // Errors (localize later)
     enum CalcError: LocalizedError {
@@ -77,7 +86,7 @@ final class MegaCalcViewModel {
             resultText = error.localizedDescription
         case .success(let a):
             let algo = self.algo
-            startTask {
+            startFactorialTask {
                 let outcome: Result<String, CalcError> = await self.runBlockingWithCancellation { [algo] in
                     do {
                         let r = try algo.factorial(a.toInt())
@@ -152,6 +161,22 @@ final class MegaCalcViewModel {
         return .success(a)
     }
 
+    // MARK: - Duration formatting
+
+    private static func formatDuration(_ seconds: Double) -> String {
+        if seconds < 1.0 {
+            let ms = Int(seconds * 1000)
+            return "\(ms) ms"
+        } else if seconds < 60.0 {
+            return String(format: "%.1f s", seconds)
+        } else {
+            let totalSeconds = Int(seconds)
+            let m = totalSeconds / 60
+            let s = totalSeconds % 60
+            return "\(m)m \(s)s"
+        }
+    }
+
     // MARK: - Operation helpers
 
     private func performBinary(_ op: (BigInteger, BigInteger) -> BigInteger) {
@@ -161,8 +186,11 @@ final class MegaCalcViewModel {
         case .failure(let error):
             resultText = error.localizedDescription
         case .success(let (a, b)):
+            let start = ContinuousClock.now
             let r = op(a, b)
+            let elapsed = ContinuousClock.now - start
             resultText = r.toString()
+            durationText = Self.formatDuration(elapsed.seconds)
         }
     }
 
@@ -174,8 +202,11 @@ final class MegaCalcViewModel {
             resultText = error.localizedDescription
         case .success(let (a, b)):
             do {
+                let start = ContinuousClock.now
                 let r = try op(a, b)
+                let elapsed = ContinuousClock.now - start
                 resultText = r.toString()
+                durationText = Self.formatDuration(elapsed.seconds)
             } catch let e as CalcError {
                 resultText = e.localizedDescription
             } catch {
@@ -188,8 +219,39 @@ final class MegaCalcViewModel {
     private func startTask(_ operation: @escaping () async -> Void) {
         currentTask?.cancel()
         isBusy = true
+        durationText = ""
         currentTask = Task {
             defer { isBusy = false }
+            await operation()
+        }
+    }
+
+    /// Starts a factorial-specific task with progress polling
+    private func startFactorialTask(_ operation: @escaping () async -> Void) {
+        currentTask?.cancel()
+        progressPollTask?.cancel()
+        isBusy = true
+        isFactorialRunning = true
+        factorialProgress = 0.0
+        durationText = ""
+
+        // Poll algo.progress at ~20 Hz for smooth UI updates
+        let algo = self.algo
+        progressPollTask = Task {
+            while !Task.isCancelled {
+                self.factorialProgress = algo.progress
+                try? await Task.sleep(for: .milliseconds(50))
+            }
+        }
+
+        currentTask = Task {
+            defer {
+                isBusy = false
+                isFactorialRunning = false
+                factorialProgress = 1.0
+                progressPollTask?.cancel()
+                progressPollTask = nil
+            }
             await operation()
         }
     }
@@ -197,7 +259,8 @@ final class MegaCalcViewModel {
     // Runs blocking work off the main actor, with cancellation propagating to the algorithm
     private func runBlockingWithCancellation(_ work: @escaping @Sendable () -> Result<String, CalcError>) async -> Result<String, CalcError> {
         let localAlgo = self.algo
-        return await withTaskCancellationHandler(operation: {
+        let start = ContinuousClock.now
+        let result = await withTaskCancellationHandler(operation: {
             // Run the blocking work off the main actor
             await Task.detached(priority: .userInitiated) { () -> Result<String, CalcError> in
                 return work()
@@ -205,6 +268,9 @@ final class MegaCalcViewModel {
         }, onCancel: { [localAlgo] in
             localAlgo.cancel()
         })
+        let elapsed = ContinuousClock.now - start
+        durationText = Self.formatDuration(elapsed.seconds)
+        return result
     }
 
     private func apply(_ outcome: Result<String, CalcError>) {
@@ -214,5 +280,14 @@ final class MegaCalcViewModel {
             case .failure(let error):
                 self.resultText = error.localizedDescription
         }
+    }
+}
+
+// MARK: - Duration extension
+
+private extension Duration {
+    var seconds: Double {
+        let (s, atto) = self.components
+        return Double(s) + Double(atto) * 1e-18
     }
 }

@@ -30,7 +30,7 @@ struct MegaCalcView: View {
                 .buttonStyle(CalcButtonStyle())
                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
 
-                if vm.isBusy {
+                if vm.isBusy && !vm.isFactorialRunning {
                     ProgressView().padding(.vertical, 8)
                 }
 
@@ -49,6 +49,14 @@ struct MegaCalcView: View {
                     .buttonStyle(OperationButtonStyle())
                 }
                 .padding(EdgeInsets(top: 20, leading: 10, bottom: 0, trailing: 10))
+
+                Spacer()
+
+                StatusBar(
+                    isFactorialRunning: vm.isFactorialRunning,
+                    factorialProgress: vm.factorialProgress,
+                    durationText: vm.durationText
+                )
             }
         )
     }
@@ -84,6 +92,29 @@ private struct OperandRow: View {
                 .frame(width: 80, alignment: .trailing)
             Button(buttonTitle, action: action)
         }
+    }
+}
+
+private struct StatusBar: View {
+    let isFactorialRunning: Bool
+    let factorialProgress: Double
+    let durationText: String
+
+    var body: some View {
+        HStack {
+            Spacer()
+
+            if isFactorialRunning {
+                ProgressView(value: factorialProgress)
+                    .frame(maxWidth: 200)
+            }
+
+            Text(durationText)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(width: 80, alignment: .trailing)
+        }
+        .padding(EdgeInsets(top: 4, leading: 10, bottom: 6, trailing: 10))
     }
 }
 

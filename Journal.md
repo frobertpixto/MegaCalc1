@@ -4,7 +4,7 @@
 
 Imagine you're doing math on a regular calculator and you hit the limit — 19 digits, maybe 20 if you're lucky. Now imagine you want to multiply two numbers with *500,000 digits each*. That's MegaCalc.
 
-MegaCalc1 is an arbitrary-precision integer calculator for macOS. It doesn't care how big your numbers are. Want to compute `50000!`? Go ahead. Want to check if a 30-digit number is prime? Be our guest. It handles numbers that would make `Int64` cry.
+MegaCalc1 is an arbitrary-precision integer calculator for macOS. It doesn't care how big your numbers are. Want to compute `50000!`? Go ahead (the answer has 213237 digits). Want to check if 123456789 is prime? Be our guest (it is not, but 123456761 is). It handles numbers that would make `Int64` cry.
 
 This project has a fascinating lineage: Francois Robert first built it in 1993 in C++ on MS-DOS, motivated by a magazine article about a world record for large-number multiplication (22,000 digits in 24 hours). He beat that record by multiplying two 500,000-digit numbers. Since then, MegaCalc has been reimplemented in C#, Java, and Swift. This SwiftUI version is the latest chapter.
 
