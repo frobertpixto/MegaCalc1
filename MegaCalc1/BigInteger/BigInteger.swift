@@ -420,14 +420,14 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 	{
 		let positiveB	= abs(b)
 		
-		if abs(a) < positiveB
+        if b.isNumberZero()
+        {
+            throw BigIntegerError.divideByZero
+        }
+
+        if abs(a) < positiveB
 		{
 			return BigInteger(0) // result is smaller than 1, return 0
-		}
-		
-		if b.isNumberZero()
-		{
-			throw BigIntegerError.divideByZero
 		}
 		
 		let lengthA = a.digitCount()
