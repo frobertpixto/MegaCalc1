@@ -1,11 +1,17 @@
 # MegaCalc1
 
+MegaCalc1 is an arbitrary-precision integer calculator for macOS. It doesn't care how big your numbers are.
+- Want to compute `50000!`? Go ahead (the answer has 213237 digits). 
+- Want to check if 123456789 is prime? Be our guest (it is not, but 123456761 is).
+
 ## Migration to SwiftUI
 This a migration from my MegaCalc repo (AppKit) to SwiftUI
 
 This is still a Work in Progress as I continue to learn SwiftUI
 
 ### TODO
+- Add Unit tests for Algos
+- Add UI tests
 - Improve MegaDecimalAlgo.getUpperSquareRootApproximation() to lower the number of calculations when searching for prime numbers.
 - Support Light and Dark Themes.
 - Make sure that displayed duration includes full duration from start to finish.
@@ -13,10 +19,7 @@ This is still a Work in Progress as I continue to learn SwiftUI
   - All 111...111 of selected length. Example: for selected length 9: 111111111
   - All 999...999 of selected length
   - All Random of selected length
-- Use struct instead of classes?  
 - Implement Accessibility features with SwiftUI?
-- Add Unit tests for Algos
-- Add UI tests
 - Add support for interrupting/continuing a calculation using the file system to store progression state?
 - Support decimal point with BigDecimal?
 
@@ -69,22 +72,12 @@ The Swift version has the following properties:
 
 5. toByteArray() is verbose and slow (Big​Integer​.swift​:979​-1064). The 7-case if​/else ladder for the first octoble could be replaced by a simple loop dividing by decreasing powers of 10, or by converting via String(octoble​Value) and mapping characters to UInt8.
 
-Robustness — Code Quality
-
-6. The String extension (Big​Integer​.swift​:13​-38) adds generic subscript/substring helpers globally. These could collide with other code. Consider making them private or fileprivate, or replacing them with direct String​.​Index-based operations inside Big​Integer.
-
-7. mNbOctobles is redundant with mOctobleList.count. Maintaining both in sync is error-prone (and indeed get​Hash​Code has to "repair" it). Eliminating m​Nb​Octobles and using m​Octoble​List​.count directly would remove an entire class of bugs.
-
-8. isPrime checks only one factor at a time incrementally (Mega​Decimal​Algo​.swift​:145​-155). Skipping even numbers after 2 (incrementing by 2 instead of 1) would halve the work. Checking 2, 3, then 6k±1 would reduce it to ~1/3. A Miller-Rabin probabilistic test would make large-number primality feasible.
-
 Summary of priorities
 
 | Priority | Improvement | Impact |
 |----------|-------------|--------|
 | 1 | Replace repeated-subtraction division with digit-estimation | Massive speedup for division/modulo |
 | 2 | Dedicated "multiply by 10" instead of exp10(1) via byte array | Large speedup for division |
-| 3 | Eliminate redundant m​Nb​Octobles | Removes bug surface |
-| 4 | Skip even factors in is​Prime | 2–3x speedup |
 
 ---
 by Francois Robert 

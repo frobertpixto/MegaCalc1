@@ -10,33 +10,6 @@
 
 import Foundation
 
-extension String {
-
-	 var length: Int {
-		  return count
-	 }
-
-	 subscript (i: Int) -> String {
-		  return self[i ..< i + 1]
-	 }
-
-	 func substring(fromIndex: Int) -> String {
-		  return self[min(fromIndex, length) ..< length]
-	 }
-
-	 func substring(toIndex: Int) -> String {
-		  return self[0 ..< max(0, toIndex)]
-	 }
-
-	 subscript (r: Range<Int>) -> String {
-		  let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
-														  upper: min(length, max(0, r.upperBound))))
-		  let start = index(startIndex, offsetBy: range.lowerBound)
-		  let end = index(start, offsetBy: range.upperBound - range.lowerBound)
-		  return String(self[start ..< end])
-	 }
-}
-
 enum BigIntegerError: Error, Equatable {
 	case invalidNumber(description: String)
 	case divideByZero
@@ -47,7 +20,7 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 {
 	private var mPositiveSign	= true
 	private let mOctobleList	= IntegerList() // The full number is represented as a list of 8 digits integers. We call a 8 digits integer value an Octoble
-	private var mNbOctobles		= 0;
+	private var mNbOctobles: Int { mOctobleList.count }
 	
 	private static let intMinForBigInteger = BigInteger(Int64.min + 1)
 	private static let intMaxForBigInteger = BigInteger(Int64.max - 1)
@@ -69,11 +42,29 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		 hasher.combine(getHashCode())
 	}
 
+	// MARK: - Private String Helpers
+
+	/// Returns a single character from the string at the given integer index.
+	private static func char(at i: Int, in s: String) -> String {
+		let start = s.index(s.startIndex, offsetBy: i)
+		let end = s.index(start, offsetBy: 1)
+		return String(s[start ..< end])
+	}
+
+	/// Returns a substring of `s` for the given integer range, clamped to valid bounds.
+	private static func substring(_ s: String, range r: Range<Int>) -> String {
+		let len = s.count
+		let lower = max(0, min(len, r.lowerBound))
+		let upper = min(len, max(0, r.upperBound))
+		let start = s.index(s.startIndex, offsetBy: lower)
+		let end = s.index(start, offsetBy: upper - lower)
+		return String(s[start ..< end])
+	}
+
 	// MARK: - CTOR
 	init()
 	{
 		// Default to 0
-		mNbOctobles = 1
 		_ = mOctobleList.add(0)
 		
 	}
@@ -86,9 +77,7 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 			isPositive = !isPositive
 		}
 		
-		mNbOctobles = a.mNbOctobles
-		
-		for index in 0..<mNbOctobles
+		for index in 0..<a.mNbOctobles
 		{
 			_ = mOctobleList.add(a.mOctobleList[index])
 		}
@@ -105,15 +94,15 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		
 		// Prepare the list of Octobles, Starting from the End. So 123456789 will be stored as [0] = 23456789, [1] = 1
 		let digitStringLength = digitString.count
-		mNbOctobles		= ((digitStringLength - 1) / 8) + 1
+		let nbOctobles	= ((digitStringLength - 1) / 8) + 1
 		var octobleNo	= 0;
-		
-		while (octobleNo < mNbOctobles)
+
+		while (octobleNo < nbOctobles)
 		{
 			let endString		= digitStringLength - 1 - (octobleNo * 8);
 			var beginString	= digitStringLength - 8 - (octobleNo * 8);
-			
-			if octobleNo + 1 == mNbOctobles
+
+			if octobleNo + 1 == nbOctobles
 			{
 				beginString = 0;
 			}
@@ -134,7 +123,7 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 			return nil
 		}
 		
-		let firstChar			= a[0];
+		let firstChar			= BigInteger.char(at: 0, in: a);
 		var startDigitIndex	= 0;
 		
 		if firstChar == "-" || firstChar == "+"
@@ -154,7 +143,7 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		}
 
 		// Prepare the list of Octobles, Starting from the End. So 123456789 will be stored as [0] = 23456789, [1] = 1
-		let digitString	= a[Range(startDigitIndex...realLength)]
+		let digitString	= BigInteger.substring(a, range: Range(startDigitIndex...realLength))
 		let nbOctobles		= ((realLength - 1) / 8) + 1
 		var octobleNo		= 0
 		
@@ -173,8 +162,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 			octobleNo += 1
 		}
 		
-		mNbOctobles = nbOctobles
-		
 		if isNumberZero()
 		{
 			isPositive = true
@@ -182,7 +169,7 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 
 		removeLeftZeroes()
 	}
-	
+
 	private init?(pByteList : [UInt8], pStart : Int, pLength: Int)
 	{
 		let endIndex = pStart + pLength - 1;
@@ -219,8 +206,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 			_ = mOctobleList.add(octobleValue)
 			octobleNo += 1
 		}
-		
-		mNbOctobles = nbOctobles;
 		
 		removeLeftZeroes();
 	}
@@ -267,8 +252,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		{
 			_ =  result.mOctobleList.add(carry);
 		}
-		
-		result.mNbOctobles = result.mOctobleList.count
 		
 		result.removeLeftZeroes();
 		
@@ -405,7 +388,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 			iRes += 1
 		}
 		
-		result.mNbOctobles = result.mOctobleList.count;
 		result.removeLeftZeroes()
 		
 		return result
@@ -467,7 +449,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		}
 		
 		quotient.isPositive	= (a.isPositive && b.isPositive) || (!a.isPositive && !b.isPositive)
-		quotient.mNbOctobles = quotient.mOctobleList.count;
 		quotient.removeLeftZeroes()
 		
 		return quotient;
@@ -529,7 +510,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		}
 		
 		evalValue.isPositive		= a.isPositive
-		evalValue.mNbOctobles	= evalValue.mOctobleList.count;
 		evalValue.removeLeftZeroes()
 		
 		return evalValue;
@@ -686,7 +666,7 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 	/// - returns:  The least significant digit of a number
 	public func leastSignificantDigit() -> Int
 	{
-		if mNbOctobles == 0 || mOctobleList.count == 0
+		if mOctobleList.count == 0
 		{
 			return 0
 		}
@@ -717,7 +697,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 			}
 			
 			result.mOctobleList.insertRange(atIndex: 0, arrayToInsert: newValues)
-			result.mNbOctobles += nbExponent
 		}
 		else if nbExponent < 0 && result.mNbOctobles + nbExponent <= 0
 		{
@@ -728,7 +707,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		{
 			// Each octoble removed represent a division by 100_000_000
 			result.mOctobleList.removeRange(atIndex: 0, count: -nbExponent)
-			result.mNbOctobles += nbExponent;
 		}
 		
 		return result
@@ -806,7 +784,7 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		assert(startPosition <= endPosition)
 		assert(digitString.count > 0)
 		
-		let substring			= digitString[Range(startPosition...endPosition)]
+		let substring			= BigInteger.substring(digitString, range: Range(startPosition...endPosition))
 		if let octobleValue	= Int(substring)
 		{
 			return octobleValue
@@ -866,7 +844,6 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 			if valA == 0 && index > 0
 			{
 				mOctobleList.removeAt(index)
-				mNbOctobles -= 1
 			}
 			else
 			{

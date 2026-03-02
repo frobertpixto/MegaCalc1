@@ -108,16 +108,31 @@ final class MegaDecimalAlgo: Sendable {
 	}
 
 	func isPrime(_ a: BigInteger) throws -> Bool {
-		// TODO: Improve Algo. See: https://en.wikipedia.org/wiki/Primality_test
-
 		prepare()
 
 		guard a > BigInteger(1) else {
 			return false
 		}
 
-		var factor		= BigInteger(2)
-		var maxCheck	= BigInteger()
+		let zero  = BigInteger(0)
+		let two   = BigInteger(2)
+		let three = BigInteger(3)
+
+		// 2 and 3 are prime
+		if a == two || a == three {
+			return true
+		}
+
+		// Eliminate even numbers and multiples of 3
+		if try a % two == zero {
+			return false
+		}
+		if try a % three == zero {
+			return false
+		}
+
+		// Calculate the upper bound for trial division (√a)
+		var maxCheck = BigInteger()
 		let digitCount = a.digitCount()
 
 		if digitCount < 19 {
@@ -130,24 +145,26 @@ final class MegaDecimalAlgo: Sendable {
 			maxCheck = try getUpperSquareRootApproximation(a: a)
 		}
 
-		// Do a quick check for some obvious cases where the number will never be prime
-		if digitCount > 1 {
-			let lsd = a.leastSignificantDigit()
-			if lsd == 0 || lsd == 2 || lsd == 4 || lsd == 5 || lsd == 6 || lsd == 8 {
-				// Number >= 10 ending with [0,2,4,5,6,8] cannot be prime
-				return false
-			}
-		}
-
-		let zero = BigInteger(0)
-		let one	= BigInteger(1)
+		// Trial division using 6k±1 optimization:
+		// All primes > 3 are of the form 6k±1, so we only need to check those candidates.
+		var factor = BigInteger(5)
+		let six = BigInteger(6)
 
 		while factor <= maxCheck {
+			// Check 6k-1
 			if try a % factor == zero {
 				return false
 			}
 
-			factor += one
+			// Check 6k+1
+			let factorPlus2 = factor + two
+			if factorPlus2 <= maxCheck {
+				if try a % factorPlus2 == zero {
+					return false
+				}
+			}
+
+			factor += six
 
 			if isCancelled {
 				throw MegaDecimalAlgoError.cancelled
@@ -164,15 +181,28 @@ final class MegaDecimalAlgo: Sendable {
 			throw MegaDecimalAlgoError.doesNotExists
 		}
 
+		let zero  = BigInteger(0)
+		let one   = BigInteger(1)
+		let two   = BigInteger(2)
+		let three = BigInteger(3)
+		let six   = BigInteger(6)
+
 		var currentValue = a
 
-		let zero = BigInteger(0)
-		let one	= BigInteger(1)
-		let two	= BigInteger(2)
-
 		while currentValue.isPositive {
-			var factor		= two
-			var maxCheck	= BigInteger()
+			// Handle small values directly
+			if currentValue == two || currentValue == three {
+				break
+			}
+
+			// Quick rejection: divisible by 2 or 3
+			if try currentValue % two == zero || currentValue % three == zero {
+				currentValue -= one
+				continue
+			}
+
+			// Calculate upper bound for trial division (√currentValue)
+			var maxCheck = BigInteger()
 
 			if currentValue.digitCount() < 19 {
 				if let aNum = Double(currentValue.toString()) {
@@ -184,22 +214,37 @@ final class MegaDecimalAlgo: Sendable {
 				maxCheck = try getUpperSquareRootApproximation(a: currentValue)
 			}
 
+			// Trial division using 6k±1 optimization
+			var factor = BigInteger(5)
+			var foundFactor = false
+
 			while factor <= maxCheck {
+				// Check 6k-1
 				if try currentValue % factor == zero {
-					currentValue -= one
-					factor		= two
-					continue
+					foundFactor = true
+					break
 				}
 
-				factor += one
+				// Check 6k+1
+				let factorPlus2 = factor + two
+				if factorPlus2 <= maxCheck {
+					if try currentValue % factorPlus2 == zero {
+						foundFactor = true
+						break
+					}
+				}
+
+				factor += six
 
 				if isCancelled {
 					throw MegaDecimalAlgoError.cancelled
 				}
 			}
 
-			if factor > maxCheck {
-				// this is a Prime
+			if foundFactor {
+				currentValue -= one
+			} else {
+				// No factor found — currentValue is prime
 				break
 			}
 		}
