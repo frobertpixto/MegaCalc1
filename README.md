@@ -58,7 +58,7 @@ The Swift version has the following properties:
 
 
 ---
-## Improvements for Robustness and Performance suggested by Claude code
+## Improvements for Performance suggested by Claude code
 
 ### Performance — High Impact
 
