@@ -57,6 +57,9 @@
 		398A715C277F72C300A14FF2 /* BorderedViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedViewModifier.swift; sourceTree = "<group>"; };
 		398A71A5277F80E100A14FF2 /* BigInteger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigInteger.swift; sourceTree = "<group>"; };
 		398A71A6277F80E100A14FF2 /* IntegerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerList.swift; sourceTree = "<group>"; };
+		39A213B82F5524260033C13C /* AGENTS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = AGENTS.md; sourceTree = "<group>"; };
+		39A213B92F5524260033C13C /* CLAUDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CLAUDE.md; sourceTree = "<group>"; };
+		39A213BA2F5524260033C13C /* Journal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Journal.md; sourceTree = "<group>"; };
 		39A76302277A9F320003BBEB /* MegaCalc1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MegaCalc1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39A76305277A9F320003BBEB /* MegaCalc1App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalc1App.swift; sourceTree = "<group>"; };
 		39A76307277A9F320003BBEB /* MegaCalcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaCalcView.swift; sourceTree = "<group>"; };
@@ -125,6 +128,9 @@
 		39A762F9277A9F320003BBEB = {
 			isa = PBXGroup;
 			children = (
+				39A213B82F5524260033C13C /* AGENTS.md */,
+				39A213B92F5524260033C13C /* CLAUDE.md */,
+				39A213BA2F5524260033C13C /* Journal.md */,
 				39F57293277FBCA1003143CE /* README.md */,
 				39A76304277A9F320003BBEB /* MegaCalc1 */,
 				39A76316277A9F360003BBEB /* MegaCalc1Tests */,

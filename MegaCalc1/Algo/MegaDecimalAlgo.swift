@@ -174,14 +174,14 @@ final class MegaDecimalAlgo: Sendable {
 			var factor		= two
 			var maxCheck	= BigInteger()
 
-			if a.digitCount() < 19 {
-				if let aNum = Double(a.toString()) {
+			if currentValue.digitCount() < 19 {
+				if let aNum = Double(currentValue.toString()) {
 					maxCheck = BigInteger(Int64(floor(sqrt(aNum))))
 				} else {
-					assert(false, "Double(a.toString()) failed")
+					assert(false, "Double(currentValue.toString()) failed")
 				}
 			} else {
-				maxCheck = try getUpperSquareRootApproximation(a: a)
+				maxCheck = try getUpperSquareRootApproximation(a: currentValue)
 			}
 
 			while factor <= maxCheck {

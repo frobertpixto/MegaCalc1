@@ -535,148 +535,48 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 		return evalValue;
 	}
 	
-	public static func > (a: BigInteger, b: BigInteger) -> Bool
+	/// Returns -1 if a < b, 0 if equal, 1 if a > b.
+	/// Single traversal used by all comparison operators.
+	private static func compareTo(_ a: BigInteger, _ b: BigInteger) -> Int
 	{
-		if a.isPositive == true && b.isPositive == false
-		{
-			return true
-		}
-		if a.isPositive == false && b.isPositive == true
-		{
-			return false
-		}
-		if a.isPositive == false && b.isPositive == false
-		{
-			return -a < -b
-		}
+		// Different signs
+		if a.isPositive && !b.isPositive { return 1 }
+		if !a.isPositive && b.isPositive { return -1 }
 		
-		// At this point, we can assume that we compare to positive number
-		if a.mNbOctobles > b.mNbOctobles
-		{
-			return true
-		}
+		// Same sign — compare magnitudes
+		// For negative numbers, larger magnitude means smaller value
+		let flip = a.isPositive ? 1 : -1
 		
-		if a.mNbOctobles < b.mNbOctobles
-		{
-			return false
-		}
-
-		// At this point, we can assume that we compare to positive number of same size
-		for index in (0...a.mNbOctobles-1).reversed()
-		{
-			let valA = a.mOctobleList[index]
-			let valB = b.mOctobleList[index]
-			
-			if valA > valB
-			{
-				return true
-			}
-			
-			if valA < valB
-			{
-				return false
-			}
-		}
-		
-		// Totally equal
-		return false
-	}
-	
-	public static func < (a: BigInteger, b: BigInteger) -> Bool
-	{
-		if a.isPositive == false && b.isPositive == true
-		{
-			return true
-		}
-		if a.isPositive == true && b.isPositive == false
-		{
-			return false
-		}
-		if a.isPositive == false && b.isPositive == false
-		{
-			return -a > -b
-		}
-		
-		// At this point, we can assume that we compare to positive number
-		if a.mNbOctobles < b.mNbOctobles
-		{
-			return true
-		}
-		
-		if a.mNbOctobles > b.mNbOctobles
-		{
-			return false
-		}
-		
-		// At this point, we can assume that we compare to positive number of same size
-		for index in (0...a.mNbOctobles-1).reversed()
-		{
-			let valA = a.mOctobleList[index]
-			let valB = b.mOctobleList[index]
-			
-			if valA < valB
-			{
-				return true
-			}
-			
-			if valA > valB
-			{
-				return false
-			}
-		}
-		
-		// Totally equal
-		return false
-	}
-	
-	public static func == (a: BigInteger, b: BigInteger) -> Bool
-	{
-		if a.isPositive != b.isPositive
-		{
-			return false
-		}
-		
-		// At this point, we can assume that we compare to same sign number
 		if a.mNbOctobles != b.mNbOctobles
 		{
-			return false
+			return (a.mNbOctobles > b.mNbOctobles ? 1 : -1) * flip
 		}
 		
-		// At this point, we can assume that we compare positive numbers of same size
-		for index in 0...a.mNbOctobles-1
+		for index in (0..<a.mNbOctobles).reversed()
 		{
 			let valA = a.mOctobleList[index]
 			let valB = b.mOctobleList[index]
 			
 			if valA != valB
 			{
-				return false
+				return (valA > valB ? 1 : -1) * flip
 			}
 		}
 		
-		// Totally equal
-		return true
+		return 0
 	}
 	
-	public static func >= (a: BigInteger, b: BigInteger) -> Bool
-	{
-		return (a == b) || (a > b);
-	}
-
-	public static func <= (a: BigInteger, b: BigInteger) -> Bool
-	{
-		return (a == b) || (a < b);
-	}
-	
-	public static func != (a: BigInteger, b: BigInteger) -> Bool
-	{
-		return !(a == b);
-	}
+	public static func >  (a: BigInteger, b: BigInteger) -> Bool { compareTo(a, b) > 0 }
+	public static func <  (a: BigInteger, b: BigInteger) -> Bool { compareTo(a, b) < 0 }
+	public static func == (a: BigInteger, b: BigInteger) -> Bool { compareTo(a, b) == 0 }
+	public static func >= (a: BigInteger, b: BigInteger) -> Bool { compareTo(a, b) >= 0 }
+	public static func <= (a: BigInteger, b: BigInteger) -> Bool { compareTo(a, b) <= 0 }
+	public static func != (a: BigInteger, b: BigInteger) -> Bool { compareTo(a, b) != 0 }
 	
 	
 	public static func abs(_ a: BigInteger) -> BigInteger
 	{
-		return a >= BigInteger(0) ? BigInteger(a) : BigInteger(a, hasReversedSign: true)
+		return a.isPositive ? a : BigInteger(a, hasReversedSign: true)
 	}
 	
 	// MARK: - public
@@ -1070,9 +970,7 @@ public class BigInteger: @unchecked Sendable, CustomStringConvertible, Comparabl
 	{
 		var hashcode = 0
 		
-		mNbOctobles = mOctobleList.count;
-		
-		for index in (0...mNbOctobles-1)
+		for index in 0..<mOctobleList.count
 		{
 			hashcode += mOctobleList[index]
 			

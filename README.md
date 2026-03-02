@@ -7,7 +7,8 @@ This is still a Work in Progress as I continue to learn SwiftUI
 
 ### TODO
 - Improve MegaDecimalAlgo.getUpperSquareRootApproximation() to lower the number of calculations when searching for prime numbers.
-- Support Light and Dark Themes
+- Support Light and Dark Themes.
+- Make sure that displayed duration includes full duration from start to finish.
 - Add Buttons that generates big numbers
   - All 111...111 of selected length. Example: for selected length 9: 111111111
   - All 999...999 of selected length
@@ -68,22 +69,13 @@ The Swift version has the following properties:
 
 5. toByteArray() is verbose and slow (Big​Integer​.swift​:979​-1064). The 7-case if​/else ladder for the first octoble could be replaced by a simple loop dividing by decreasing powers of 10, or by converting via String(octoble​Value) and mapping characters to UInt8.
 
-Robustness — Correctness Issues
-
-6. getHashCode() mutates state (Big​Integer​.swift​:1073). The line m​Nb​Octobles = m​Octoble​List​.count is a side effect inside a read-only operation. This is called from hash(into:), which must not mutate. If m​Nb​Octobles ever drifts from m​Octoble​List​.count, hashing silently "fixes" it, masking bugs.
-7. `>=` and `<=` do double work (Big​Integer​.swift​:661​-669). a >= b calls a == b then a > b, traversing the octoble list twice. Implementing a single compare​To() → Int method would let <, >, ==, <=, >= all be one-liners with a single traversal.
-
-8. abs() creates an unnecessary copy for positive numbers (Big​Integer​.swift​:677​-680). abs(pos​Num) returns Big​Integer(a) — a full copy. For an immutable value this wouldn't matter, but since you're creating a copy every time, consider returning self when already positive (safe if treated as immutable).
-
-9. smallerOrEqualPrime recalculates maxCheck from a instead of currentValue (Mega​Decimal​Algo​.swift​:177). It uses a​.digit​Count() and a​.to​String() instead of current​Value, so the upper bound for factor checking never shrinks as current​Value decrements. This means it tests too many factors for each candidate.
-
 Robustness — Code Quality
 
-10. The String extension (Big​Integer​.swift​:13​-38) adds generic subscript/substring helpers globally. These could collide with other code. Consider making them private or fileprivate, or replacing them with direct String​.​Index-based operations inside Big​Integer.
+6. The String extension (Big​Integer​.swift​:13​-38) adds generic subscript/substring helpers globally. These could collide with other code. Consider making them private or fileprivate, or replacing them with direct String​.​Index-based operations inside Big​Integer.
 
-11. mNbOctobles is redundant with mOctobleList.count. Maintaining both in sync is error-prone (and indeed get​Hash​Code has to "repair" it). Eliminating m​Nb​Octobles and using m​Octoble​List​.count directly would remove an entire class of bugs.
+7. mNbOctobles is redundant with mOctobleList.count. Maintaining both in sync is error-prone (and indeed get​Hash​Code has to "repair" it). Eliminating m​Nb​Octobles and using m​Octoble​List​.count directly would remove an entire class of bugs.
 
-12. isPrime checks only one factor at a time incrementally (Mega​Decimal​Algo​.swift​:145​-155). Skipping even numbers after 2 (incrementing by 2 instead of 1) would halve the work. Checking 2, 3, then 6k±1 would reduce it to ~1/3. A Miller-Rabin probabilistic test would make large-number primality feasible.
+8. isPrime checks only one factor at a time incrementally (Mega​Decimal​Algo​.swift​:145​-155). Skipping even numbers after 2 (incrementing by 2 instead of 1) would halve the work. Checking 2, 3, then 6k±1 would reduce it to ~1/3. A Miller-Rabin probabilistic test would make large-number primality feasible.
 
 Summary of priorities
 
@@ -92,10 +84,7 @@ Summary of priorities
 | 1 | Replace repeated-subtraction division with digit-estimation | Massive speedup for division/modulo |
 | 2 | Dedicated "multiply by 10" instead of exp10(1) via byte array | Large speedup for division |
 | 3 | Eliminate redundant m​Nb​Octobles | Removes bug surface |
-| 4 | Fix get​Hash​Code mutation side effect | Correctness |
-| 5 | Fix smaller​Or​Equal​Prime using wrong variable | Correctness |
-| 6 | Skip even factors in is​Prime | 2–3x speedup |
-| 7 | Single compare​To method | Cleaner, fewer traversals |
+| 4 | Skip even factors in is​Prime | 2–3x speedup |
 
 ---
 by Francois Robert 
